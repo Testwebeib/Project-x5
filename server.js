@@ -39,7 +39,10 @@ function requireConfig(_req, res, next) {
   if (!LIBRARY_ID || !API_KEY) return res.status(503).json({ error: "Video storage is not configured. Set the Bunny Stream environment variables." });
   next();
 }
-
+console.log("Bunny config check:", {
+  libraryIdSet: Boolean(LIBRARY_ID),
+  apiKeySet: Boolean(API_KEY)
+});
 app.get("/api/videos", (_req, res) => res.json(catalog));
 
 app.post("/api/videos", requireConfig, upload.single("video"), async (req, res) => {
